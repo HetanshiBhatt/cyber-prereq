@@ -1,37 +1,35 @@
-# Web Service Architecture & Implementation
+# Web Service Architecture & Server Roles
 
-## 1. Web Service Architecture & Server Roles
+## What is a Web Service?
+A web service is an application that provides functionality over the internet using standardized communication protocols such as HTTP, SOAP, and REST.
 
-### **What is a Web Service?**
-A web service is an application that provides functionality over the internet using standardized communication protocols (HTTP, SOAP, REST, etc.).
+### Components of Web Service Architecture:
+- **Client**: Initiates a request to the web service.
+- **Web Service**: Processes the request and returns a response.
+- **Server**: Hosts the web service and manages incoming requests.
 
-### **Components of Web Service Architecture**
-- **Client:** Sends a request to the web service.
-- **Web Service:** Processes the request and returns a response.
-- **Server:** Hosts the web service and manages requests.
-
-### **Role of Servers**
-- **Hosting Web Services:** The server runs the web service code, making it accessible via the internet.
-- **Processing Requests:** It handles incoming HTTP requests and executes logic to generate responses.
-- **Storage & Security:** The server often interacts with databases and ensures secure communication.
+### Roles of Servers:
+- **Hosting Web Services**: The server runs the web service code, making it accessible online.
+- **Processing Requests**: It handles incoming HTTP requests, processes them, and generates responses.
+- **Storage & Security**: The server often interacts with databases and ensures secure communication.
 
 ---
 
-## 2. RESTful vs. SOAP-based Web Services
+# RESTful vs. SOAP-based Web Services
 
-| Feature         | RESTful Web Services       | SOAP-based Web Services    |
-|---------------|--------------------------|---------------------------|
-| **Protocol**  | Uses HTTP (stateless)    | Uses XML-based protocol   |
-| **Data Format** | JSON, XML, HTML, Plain Text | Strictly XML |
-| **Performance** | Faster due to lightweight data | Slower due to XML processing |
-| **Flexibility** | Highly flexible         | Rigid due to strict standards |
-| **Security**   | Uses HTTPS, OAuth       | Built-in WS-Security |
-| **Ease of Use** | Easier to implement and consume | More complex due to specifications |
-| **Use Case**   | Ideal for web & mobile apps | Preferred for enterprise applications |
+| Feature          | RESTful Web Services                         | SOAP-based Web Services                       |
+|-----------------|--------------------------------------------|----------------------------------------------|
+| **Protocol**    | Uses HTTP (stateless)                      | Uses an XML-based protocol                  |
+| **Data Format** | Supports JSON, XML, HTML, and Plain Text  | Strictly XML                                |
+| **Performance** | Faster due to lightweight data transmission | Slower due to XML processing overhead       |
+| **Flexibility** | Highly adaptable and scalable              | Rigid due to strict standards and structure |
+| **Security**    | Relies on HTTPS, OAuth, and other web security mechanisms | Built-in WS-Security for enhanced protection |
+| **Ease of Use** | Simpler to implement and integrate        | More complex due to strict specifications   |
+| **Use Case**    | Ideal for web and mobile applications      | Commonly used in enterprise systems requiring high security |
 
-### **Key Takeaways**
-- RESTful services are lightweight, easy to use, and ideal for modern applications.
-- SOAP services provide advanced security features but are more complex and heavy.
+### Key Insights:
+- RESTful services are lightweight, flexible, and commonly used in modern web and mobile applications.
+- SOAP services offer robust security features but are more complex and have higher processing overhead.
 
 ---
 
@@ -46,16 +44,26 @@ npm install express
 
 #### **Create `server.js`**
 ```javascript
-const express = require('express');
+const express = require("express");
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get('/api/hello', (req, res) => {
-    res.json({ message: "Hello, World!" });
+// Home route
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to the web service!" });
 });
 
-app.listen(5000, () => {
-    console.log("Server running on port 5000");
+// Get user by ID
+app.get("/users/:id", (req, res) => {
+    res.json({ userId: req.params.id, name: "John Doe" });
 });
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
+
+
 ```
 
 #### **Run the Node.js Server:**
